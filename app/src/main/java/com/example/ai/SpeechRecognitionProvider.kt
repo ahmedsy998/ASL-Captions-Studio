@@ -95,7 +95,12 @@ class FirebaseGeminiSpeechProvider : SpeechRecognitionProvider {
         )
     )
 
-    private val model by lazy {
+    private fun getModel(context: Context) = run {
+        if (!ensureFirebaseInitialized(context)) {
+            throw IllegalStateException(
+                "تعذر تهيئة خدمات Firebase للذكاء الاصطناعي على هذا الجهاز. يرجى التحقق من الإعدادات والاتصال بالإنترنت."
+            )
+        }
         Firebase.ai.generativeModel(
             modelName = "gemini-3.8-flash",
             generationConfig = generationConfig {
@@ -112,6 +117,7 @@ class FirebaseGeminiSpeechProvider : SpeechRecognitionProvider {
         language: TranscriptionLanguage,
         onProgress: (TranscriptionProgress.Processing) -> Unit
     ): TranscriptionResult = withContext(Dispatchers.IO) {
+        val activeModel = getModel(context)
         onProgress(
             TranscriptionProgress.Processing(
                 stepIndex = 1,
@@ -147,7 +153,7 @@ class FirebaseGeminiSpeechProvider : SpeechRecognitionProvider {
                 )
                 val audioBytes = chunk.file.readBytes()
                 val response = withTimeout(60_000L) {
-                    model.generateContent(
+                    activeModel.generateContent(
                         content {
                             inlineData(audioBytes, "audio/mp4")
                             text(
@@ -181,7 +187,7 @@ class FirebaseGeminiSpeechProvider : SpeechRecognitionProvider {
             val frame1 = VideoMetadataExtractor.extractThumbnail(context, videoUri, 500L)
             val frame2 = VideoMetadataExtractor.extractThumbnail(context, videoUri, (durationMs / 2).coerceAtLeast(1500L))
             val response = withTimeout(60_000L) {
-                model.generateContent(
+                activeModel.generateContent(
                     content {
                         if (frame1 != null) image(frame1)
                         if (frame2 != null) image(frame2)

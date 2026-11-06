@@ -59,7 +59,7 @@ class StudioViewModel(application: Application) : AndroidViewModel(application) 
     private val database = StudioDatabase.getInstance(context)
     private val repository = StudioRepository(database.studioDao())
     private val settingsDataStore = SettingsDataStore(context)
-    private val aiSmartToolsEngine = AiSmartToolsEngine()
+    private val aiSmartToolsEngine = AiSmartToolsEngine(context)
 
     val appSettings: StateFlow<StudioAppSettings> = settingsDataStore.settingsFlow
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), StudioAppSettings())

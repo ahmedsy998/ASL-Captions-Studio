@@ -24,7 +24,9 @@ private const val TAG = "AiSmartToolsEngine"
  * Dedicated AI Smart Editing Tools Engine (Section 17) powered by Firebase AI Logic (gemini-3.8-flash).
  * Generates structured suggestions that require user confirmation before destructive edits.
  */
-class AiSmartToolsEngine {
+class AiSmartToolsEngine(
+    private val context: Context
+) {
 
     private val smartSuggestionSchema = Schema.obj(
         properties = mapOf(
@@ -56,15 +58,21 @@ class AiSmartToolsEngine {
         )
     )
 
-    private val model by lazy {
-        Firebase.ai.generativeModel(
-            modelName = "gemini-3.8-flash",
-            generationConfig = generationConfig {
-                responseMimeType = "application/json"
-                responseSchema = smartSuggestionSchema
+    private val model
+        get() = run {
+            if (!ensureFirebaseInitialized(context)) {
+                throw IllegalStateException(
+                    "تعذر تهيئة خدمات Firebase للذكاء الاصطناعي على هذا الجهاز."
+                )
             }
-        )
-    }
+            Firebase.ai.generativeModel(
+                modelName = "gemini-3.8-flash",
+                generationConfig = generationConfig {
+                    responseMimeType = "application/json"
+                    responseSchema = smartSuggestionSchema
+                }
+            )
+        }
 
     /**
      * Tool 2: Automatic Language & Dialect Detection

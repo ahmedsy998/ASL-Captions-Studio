@@ -1,17 +1,45 @@
 package com.example
 
+import android.content.Context
+import android.content.Intent
+import androidx.test.core.app.ApplicationProvider
+import com.example.ai.configureAppCheck
+import com.example.ai.ensureFirebaseInitialized
 import com.example.data.local.ProjectJsonSerializer
 import com.example.domain.model.*
-import com.example.media.CaptionAnimationEngine
 import com.example.ui.viewmodel.StudioViewModel
+import com.google.firebase.FirebaseApp
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 /**
- * Comprehensive verification suite covering Arabic RTL text shaping, English LTR rendering,
- * timeline operations, caption timing, and audio synchronization without external Maven fetches.
+ * Comprehensive verification suite covering Firebase initialization, Arabic RTL text shaping,
+ * English LTR rendering, timeline operations, caption timing, and audio synchronization.
  */
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [34])
 class ExampleRobolectricTest {
+
+    @Test
+    fun `verify FirebaseApp initialization and AppCheck configuration never throw uninitialized error`() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        FirebaseApp.clearInstancesForTest()
+        assertTrue("FirebaseApp instances should be empty after clear", FirebaseApp.getApps(context).isEmpty())
+
+        val initialized = ensureFirebaseInitialized(context)
+        assertTrue("ensureFirebaseInitialized should initialize Default FirebaseApp", initialized)
+        assertFalse("FirebaseApp instances should not be empty after init", FirebaseApp.getApps(context).isEmpty())
+
+        val defaultApp = FirebaseApp.getInstance()
+        assertNotNull("Default FirebaseApp should be retrievable without throwing IllegalStateException", defaultApp)
+        assertEquals("gen-lang-client-0288982000", defaultApp.options.projectId)
+
+        val debugIntent = Intent().putExtra("FIREBASE_APPCHECK_DEBUG_TOKEN", "test-debug-token-123")
+        configureAppCheck(context, debugIntent)
+    }
 
     @Test
     fun `verify Arabic RTL and English LTR language and layout configuration`() {
