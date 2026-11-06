@@ -1,0 +1,6 @@
+{
+  "name": "ASL Captions Studio",
+  "description": "An AI-powered Android video editing studio for automatic Arabic and English word-level captions, animated subtitles, visual effects, audio mixing, and 1080p MP4 export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

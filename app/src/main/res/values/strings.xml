@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ASL Captions Studio</string>
+    <string name="welcome_title_ar">مرحباً بك في ASL Captions Studio</string>
+    <string name="welcome_subtitle_ar">اصنع فيديوهات احترافية بكابشن ذكي وتأثيرات مميزة</string>
+    <string name="welcome_title_en">Welcome to ASL Captions Studio</string>
+    <string name="welcome_subtitle_en">Create professional videos with smart AI captions and effects</string>
+    <string name="action_new_project_ar">مشروع جديد</string>
+    <string name="action_import_video_ar">استيراد فيديو</string>
+    <string name="action_ai_tools_ar">أدوات الذكاء الاصطناعي</string>
+    <string name="action_export_now_ar">تصدير الآن</string>
+</resources>

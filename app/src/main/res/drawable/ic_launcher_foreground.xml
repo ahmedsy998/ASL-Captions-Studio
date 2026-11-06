@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Clapperboard Top Bar (Orange #E8872F) -->
+    <path
+        android:fillColor="#FFE8872F"
+        android:pathData="M28,28 L80,22 C82.2,21.7 84,23.5 84,25.7 L84,35 L26,35 L26,30 C26,28.9 26.9,28.1 28,28 Z" />
+    <!-- Clapperboard Dark Stripes -->
+    <path
+        android:fillColor="#FF1D2227"
+        android:pathData="M36,27 L42,26.3 L38,35 L32,35 Z M52,25.2 L58,24.5 L54,35 L48,35 Z M68,23.3 L74,22.6 L70,35 L64,35 Z" />
+    <!-- Main Video Frame Body -->
+    <path
+        android:fillColor="#FF343A40"
+        android:pathData="M26,37 L84,37 L84,74 C84,77.3 81.3,80 78,80 L32,80 C28.7,80 26,77.3 26,74 Z" />
+    <!-- Play Button Triangle (Orange #E8872F) -->
+    <path
+        android:fillColor="#FFE8872F"
+        android:pathData="M48,45 L48,63 L64,54 Z" />
+    <!-- Caption Bars at Bottom of Video Frame (Soft Ivory #F5F1EA & Orange Highlight) -->
+    <path
+        android:fillColor="#FFF5F1EA"
+        android:pathData="M34,69 L54,69 L54,73 L34,73 Z" />
+    <path
+        android:fillColor="#FFE8872F"
+        android:pathData="M57,69 L76,69 L76,73 L57,73 Z" />
+</vector>
